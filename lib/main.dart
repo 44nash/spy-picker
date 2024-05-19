@@ -19,10 +19,15 @@ class MyApp extends StatefulWidget {
 
 class _MyAppState extends State<MyApp> {
   final controller = WPChessboardController();
-  Chess.Chess chess = Chess.Chess();
+  Chess.Chess chess = Chess.Chess.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
   List<List<int>>? lastMove;
 
-
+  void initState() {
+    setState(() {
+      chess = Chess.Chess.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
+    });
+    update();
+  }
   List<String> spec_list = ["1","2","3"];  //  -------------------------LIST--------------------------------- 
 
   // not working on drop
