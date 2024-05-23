@@ -2,7 +2,9 @@ import 'dart:developer' as developer;
 import 'package:chess/chess.dart' as Chess;
 import 'package:chess_vectors_flutter/chess_vectors_flutter.dart';
 import 'package:flutter/material.dart';
+import 'package:wp_chessboard/components/pieces.dart';
 import 'package:wp_chessboard/wp_chessboard.dart';
+
 
 
 void main() {
@@ -17,6 +19,14 @@ class MyApp extends StatefulWidget {
   State<MyApp> createState() => _MyAppState();
 }
 
+class Spy { 
+  
+  Spy({required this.title, required this.piece}); 
+
+  String title;
+  dynamic piece;
+}
+
 class _MyAppState extends State<MyApp> {
   final controller = WPChessboardController();
   Chess.Chess chess = Chess.Chess.fromFEN("rnbqkbnr/pppppppp/8/8/8/8/PPPPPPPP/RNBQKBNR w KQkq - 0 1");
@@ -28,7 +38,10 @@ class _MyAppState extends State<MyApp> {
     });
     update();
   }
-  List<String> spec_list = ["1","2","3"];  //  -------------------------LIST--------------------------------- 
+  List<dynamic> spec_list = [
+          Spy(title: "1", piece: null),
+          Spy(title: "2", piece: null),
+          Spy(title: "3", piece: null)  ];  //  -------------------------LIST--------------------------------- 
 
   // not working on drop
   Widget squareBuilder(SquareInfo info) {
@@ -66,8 +79,9 @@ class _MyAppState extends State<MyApp> {
     developer.log('Square => ${square} || Piece => ${piece}');    //  ---------------------------------------------------------- 
 
     String spy = '$square-$piece';
+    Spy spyObj = new Spy(title: spy, piece: BlackBishop(size: 50));
     spec_list.removeAt(2);  
-    spec_list = [spy, ...spec_list];
+    spec_list = [spyObj, ...spec_list];
 
             setState(() {
            spec_list= spec_list;
@@ -234,21 +248,51 @@ class _MyAppState extends State<MyApp> {
                             Container(
                                 padding: EdgeInsets.only(left: 8.0),
                                 width: 120,
-                                height: 50,
-                                child:
-                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[0]}"))),
+                                height: 200,
+                                child:Column(
+                                  children: [
+                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[0].title}")),
+                                    const SizedBox(height: 24),
+                                    ElevatedButton(onPressed: () {}, child: spec_list[0].piece != null ? spec_list[0].piece : null)
+
+      
+                                   ]
+                                
+                                )
+
+                                    //  ElevatedButton(onPressed: () {}, child: Text("${spec_list[0].title}"))
+                                    ),
                              Container(
                                 padding: EdgeInsets.only(left: 8.0),
                                 width: 120,
-                                height: 50,
-                                child:
-                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[1]}"))),
+                                height: 200,
+                                child: Column(
+                                  children: [
+                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[1].title}")),
+                                    const SizedBox(height: 24),
+                                    ElevatedButton(onPressed: () {}, child: spec_list[1].piece != null ? spec_list[1].piece : null)
+
+      
+                                   ]
+                                
+                                )
+
+                                ),
+                                    //ElevatedButton(onPressed: () {}, child: Text("${spec_list[1].title}"))),
                              Container(
                                 padding: EdgeInsets.only(left: 8.0),
                                 width: 120,
-                                height: 50,
-                                child:
-                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[2]}")))
+                                height: 200,
+                                child: Column(
+                                  children: [
+                                    ElevatedButton(onPressed: () {}, child: Text("${spec_list[2].title}")),
+                                    const SizedBox(height: 24),
+                                   ElevatedButton(onPressed: () {}, child: spec_list[2].piece != null ? spec_list[2].piece : null)
+
+      
+                                   ]
+                                )
+                              )
                                     
                           ]
                   
@@ -256,26 +300,26 @@ class _MyAppState extends State<MyApp> {
                 ),
                 ),
                 const SizedBox(height: 24),
-                TextButton(
-                  onPressed: setDefaultFen,
-                  child: const Text("Set default Fen"),
-                ),
-                TextButton(
-                  onPressed: setRandomFen,
-                  child: const Text("Set random Fen"),
-                ),
-                TextButton(
-                  onPressed: addArrows,
-                  child: const Text("Add Arrows"),
-                ),
-                TextButton(
-                  onPressed: removeArrows,
-                  child: const Text("Remove Arrows"),
-                ),
-                TextButton(
-                  onPressed: toggleArrows,
-                  child: const Text("Change Orientation"),
-                )
+                // TextButton(
+                //   onPressed: setDefaultFen,
+                //   child: const Text("Set default Fen"),
+                // ),
+                // TextButton(
+                //   onPressed: setRandomFen,
+                //   child: const Text("Set random Fen"),
+                // ),
+                // TextButton(
+                //   onPressed: addArrows,
+                //   child: const Text("Add Arrows"),
+                // ),
+                // TextButton(
+                //   onPressed: removeArrows,
+                //   child: const Text("Remove Arrows"),
+                // ),
+                // TextButton(
+                //   onPressed: toggleArrows,
+                //   child: const Text("Change Orientation"),
+                // )
               ],
             );
           },
