@@ -44,6 +44,8 @@ class _MyAppState extends State<MyApp> {
     Spy(title: "3", position: "", piece: null)
   ]; //  -------------------------LIST---------------------------------
 
+  String myColor = 'Black';
+
   // not working on drop
   Widget squareBuilder(SquareInfo info) {
     Color fieldColor = (info.index + info.rank) % 2 == 0
@@ -88,6 +90,163 @@ class _MyAppState extends State<MyApp> {
   }
 
   void onPieceTap(SquareInfo square, String piece) {
+    if (myColor == 'White') {
+      if (piece != piece.toUpperCase()) {
+        developer.log("You Are White and Picked a Black Piece");
+        if (piece != 'K' && piece != 'k') {
+          int index =
+              spec_list.indexWhere((item) => item.position == '$square');
+          developer.log("Square $index");
+          if (index == -1) {
+            addPieceToList(square, piece);
+          } else {
+            developer.log("Square Exist +++++ =================");
+          }
+        } else {
+          developer.log("Cant pick Kings ========================");
+        }
+      } else {
+        developer.log("You can only pick Black Spies");
+      }
+    }
+
+    if (myColor == 'Black') {
+      if (piece != piece.toLowerCase()) {
+        developer.log("You Are Black and Picked a White Piece");
+        if (piece != 'K' && piece != 'k') {
+          int index =
+              spec_list.indexWhere((item) => item.position == '$square');
+          developer.log("Square $index");
+          if (index == -1) {
+            addPieceToList(square, piece);
+          } else {
+            developer.log("Square Exist +++++ =================");
+          }
+        } else {
+          developer.log("Cant pick Kings ========================");
+        }
+      } else {
+        developer.log("You can only pick White Spies");
+      }
+    }
+
+    // developer.log(
+    //     'Square => ${square} || Piece => ${piece}'); //  ----------------------------------------------------------
+
+    // String spy = '$square-$piece';
+    // Spy spyObj = new Spy(title: "", position: "", piece: null);
+
+    // switch (piece) {
+    //   case "K":
+    //     // do something
+    //     spyObj = new Spy(
+    //         title: "White King",
+    //         position: '$square',
+    //         piece: WhiteKing(size: 50));
+    //     break;
+    //   case "Q":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "White Queen",
+    //         position: '$square',
+    //         piece: WhiteQueen(size: 50));
+    //     break;
+    //   case "B":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "White Bishop",
+    //         position: '$square',
+    //         piece: WhiteBishop(size: 50));
+    //     break;
+    //   case "N":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "White Knight",
+    //         position: '$square',
+    //         piece: WhiteKnight(size: 50));
+    //     break;
+    //   case "R":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "White Rook",
+    //         position: '$square',
+    //         piece: WhiteRook(size: 50));
+    //     break;
+    //   case "P":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "White Pawn",
+    //         position: '$square',
+    //         piece: WhitePawn(size: 50));
+    //     break;
+
+    //   case "k":
+    //     // do something
+    //     spyObj = new Spy(
+    //         title: "Black King",
+    //         position: '$square',
+    //         piece: BlackKing(size: 50));
+    //     break;
+    //   case "q":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "Black Queen",
+    //         position: '$square',
+    //         piece: BlackQueen(size: 50));
+    //     break;
+    //   case "b":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "Black Bishop",
+    //         position: '$square',
+    //         piece: BlackBishop(size: 50));
+    //     break;
+    //   case "n":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "Black Knight",
+    //         position: '$square',
+    //         piece: BlackKnight(size: 50));
+    //     break;
+    //   case "r":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "Black Rook",
+    //         position: '$square',
+    //         piece: BlackRook(size: 50));
+    //     break;
+    //   case "p":
+    //     // do something else
+    //     spyObj = new Spy(
+    //         title: "Black Pawn",
+    //         position: '$square',
+    //         piece: BlackPawn(size: 50));
+    //     break;
+    // }
+
+    // spec_list.removeAt(2);
+    // spec_list = [spyObj, ...spec_list];
+
+    // setState(() {
+    //   spec_list = spec_list;
+    // });
+
+    // developer.log('Spec list $spec_list');
+    // showDialog(
+    //     context: context,
+    //     builder: (context) => AlertDialog(
+    //           title: Text('Piece Data'),
+    //           content: Text('Square => ${square} || Piece => ${piece}'),
+    //         ));
+
+    // if (controller.hints.key == square.index.toString()) {
+    //   controller.setHints(HintMap());
+    //   return;
+    // }
+    // showHintFields(square, piece);
+  }
+
+  addPieceToList(SquareInfo square, String piece) {
     developer.log(
         'Square => ${square} || Piece => ${piece}'); //  ----------------------------------------------------------
 
@@ -196,12 +355,6 @@ class _MyAppState extends State<MyApp> {
               title: Text('Piece Data'),
               content: Text('Square => ${square} || Piece => ${piece}'),
             ));
-
-    // if (controller.hints.key == square.index.toString()) {
-    //   controller.setHints(HintMap());
-    //   return;
-    // }
-    // showHintFields(square, piece);
   }
 
   void showHintFields(SquareInfo square, String piece) {
@@ -361,7 +514,7 @@ class _MyAppState extends State<MyApp> {
                               const SizedBox(height: 24),
                               ElevatedButton(
                                   onPressed: () {},
-                                  child: Text("${spec_list[1].position}")),
+                                  child: Text("${spec_list[0].position}")),
                               const SizedBox(height: 24),
                               ElevatedButton(
                                   onPressed: () {},
